@@ -38,135 +38,132 @@ export default function App() {
   const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.1], [1, 0.95]);
 
+  const navLinks = [
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Philosophy", href: "#philosophy" },
+    { name: "Portfolio", href: "#portfolio" },
+    { name: "Insights", href: "#insights" },
+  ];
+
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/30 flex flex-col lg:grid lg:grid-cols-[380px_1fr] xl:grid-cols-[420px_1fr] gap-px overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/30 overflow-x-hidden">
       
-      {/* Sidebar - The Identity Panel */}
-      <aside className="bg-background border-b lg:border-b-0 lg:border-r border-border p-8 md:p-10 lg:p-12 xl:p-16 flex flex-col justify-between lg:sticky lg:top-0 lg:h-screen z-20 overflow-y-auto custom-scrollbar">
-        <div className="space-y-12 lg:space-y-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="relative w-full aspect-[4/5] bg-secondary mb-8 lg:mb-12 overflow-hidden rounded-sm group">
-              <img 
-                src="https://cdn.prod.website-files.com/6823f7be37e7dd18f6e16585/6900606b8937384b23b6276f_girish.png" 
-                alt="Girish Mathrubootham" 
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ease-in-out scale-110 group-hover:scale-100"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
-              <div className="absolute bottom-4 left-4 right-4 lg:bottom-6 lg:left-6 lg:right-6">
-                <Badge className="bg-primary text-background font-bold tracking-widest uppercase text-[9px] lg:text-[10px] px-2 py-0.5 lg:px-3 lg:py-1 mb-2">
-                  NASDAQ: FRSH
-                </Badge>
-              </div>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-black leading-[0.85] tracking-tighter uppercase mb-4 lg:mb-6">
-              GIRISH<br />MATHRU-<br />BOOTHAM
-            </h1>
-            <p className="text-[10px] lg:text-[11px] uppercase tracking-[0.4em] lg:tracking-[0.5em] text-primary font-bold mb-8 lg:mb-12">
-              The Operator-Investor
-            </p>
-          </motion.div>
-
-          <div className="space-y-8 lg:space-y-10">
-            {[
-              { label: "Legacy", value: "Founder & CEO, Freshworks" },
-              { label: "Current", value: "Managing Partner, Together Fund" },
-              { label: "Focus", value: "AI-Native SaaS & Global Scale" }
-            ].map((stat, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 + (0.1 * i) }}
-                className="group"
+      {/* Sticky Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+        <div className="max-w-7xl mx-auto px-6 h-16 lg:h-20 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <span className="text-lg font-serif font-black tracking-tighter uppercase text-primary">GM</span>
+            <div className="h-4 w-px bg-border hidden sm:block" />
+            <span className="text-[10px] uppercase tracking-widest text-muted-foreground hidden sm:block font-bold">Operator-Investor</span>
+          </div>
+          
+          <nav className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                className="text-[10px] uppercase tracking-widest font-bold hover:text-primary transition-colors"
               >
-                <h3 className="text-[9px] lg:text-[10px] uppercase tracking-widest text-muted-foreground mb-1 lg:mb-2 group-hover:text-primary transition-colors">{stat.label}</h3>
-                <p className="text-base lg:text-lg font-medium tracking-tight">{stat.value}</p>
-              </motion.div>
+                {link.name}
+              </a>
             ))}
-          </div>
-        </div>
+          </nav>
 
-        <div className="mt-12 lg:mt-20 space-y-6 lg:space-y-8">
-          <div className="grid grid-cols-2 gap-4 lg:gap-8">
-            <div>
-              <span className="text-[9px] lg:text-[10px] uppercase tracking-widest text-muted-foreground block mb-1 lg:mb-2">Network</span>
-              <p className="text-xs lg:text-sm font-bold flex items-center gap-2">
-                <Network size={12} className="text-primary lg:w-3.5 lg:h-3.5" /> 500+ Founders
-              </p>
-            </div>
-            <div>
-              <span className="text-[9px] lg:text-[10px] uppercase tracking-widest text-muted-foreground block mb-1 lg:mb-2">Capital</span>
-              <p className="text-xs lg:text-sm font-bold flex items-center gap-2">
-                <TrendingUp size={12} className="text-primary lg:w-3.5 lg:h-3.5" /> $150M Fund
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex items-center justify-between pt-6 lg:pt-8 border-t border-border">
-            <div className="flex gap-4 lg:gap-6">
-              <a href="#" className="text-muted hover:text-primary transition-all hover:scale-110"><Twitter size={18} className="lg:w-5 lg:h-5" /></a>
-              <a href="#" className="text-muted hover:text-primary transition-all hover:scale-110"><Linkedin size={18} className="lg:w-5 lg:h-5" /></a>
-            </div>
-            <div className="text-[9px] lg:text-[10px] uppercase tracking-widest text-muted-foreground font-medium">
-              Chennai / Global
-            </div>
-          </div>
+          <Button className="rounded-none bg-primary text-background font-bold uppercase tracking-widest text-[9px] px-6 py-4 h-auto hover:scale-105 transition-transform">
+            Pitch
+          </Button>
         </div>
-      </aside>
+      </header>
 
-      {/* Main Content Area */}
-      <main className="bg-background relative overflow-y-auto scroll-smooth custom-scrollbar">
+      <main className="pt-16 lg:pt-20">
         
-        {/* Hero / Manifesto Section */}
-        <section className="min-h-[80vh] lg:min-h-screen flex flex-col justify-center p-8 md:p-12 lg:p-20 xl:p-24 border-b border-border relative overflow-hidden">
-          <motion.div 
-            style={{ opacity, scale }}
-            className="max-w-5xl relative z-10"
-          >
-            <Quote size={48} className="text-primary/20 mb-8 lg:mb-12 md:w-16 md:h-16 lg:w-20 lg:h-20" />
-            <h2 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-serif italic font-medium leading-[1.1] tracking-tight text-foreground mb-12 lg:mb-16">
-              "From a broken TV in Chennai to the Nasdaq bell—conviction is the only currency that doesn't depreciate."
-            </h2>
+        {/* Hero / Identity Section */}
+        <section id="home" className="min-h-[90vh] flex flex-col lg:flex-row border-b border-border">
+          {/* Identity Panel (Integrated) */}
+          <div className="lg:w-[450px] xl:w-[500px] bg-secondary/20 p-8 md:p-12 lg:p-16 xl:p-20 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-border">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="space-y-12"
+            >
+              <div className="relative w-full aspect-[4/5] bg-secondary overflow-hidden rounded-sm group">
+                <img 
+                  src="https://cdn.prod.website-files.com/6823f7be37e7dd18f6e16585/6900606b8937384b23b6276f_girish.png" 
+                  alt="Girish Mathrubootham" 
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ease-in-out scale-110 group-hover:scale-100"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+                <div className="absolute bottom-4 left-4 right-4 lg:bottom-6 lg:left-6 lg:right-6">
+                  <Badge className="bg-primary text-background font-bold tracking-widest uppercase text-[9px] lg:text-[10px] px-2 py-0.5 lg:px-3 lg:py-1 mb-2">
+                    NASDAQ: FRSH
+                  </Badge>
+                </div>
+              </div>
+              
+              <div>
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-black leading-[0.85] tracking-tighter uppercase mb-4 lg:mb-6">
+                  GIRISH<br />MATHRU-<br />BOOTHAM
+                </h1>
+                <p className="text-[10px] lg:text-[11px] uppercase tracking-[0.4em] lg:tracking-[0.5em] text-primary font-bold">
+                  The Operator-Investor
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                {[
+                  { label: "Legacy", value: "Founder & CEO, Freshworks" },
+                  { label: "Current", value: "Managing Partner, Together Fund" },
+                ].map((stat, i) => (
+                  <div key={i} className="group">
+                    <h3 className="text-[9px] lg:text-[10px] uppercase tracking-widest text-muted-foreground mb-1 group-hover:text-primary transition-colors">{stat.label}</h3>
+                    <p className="text-base lg:text-lg font-medium tracking-tight">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Manifesto Panel */}
+          <div className="flex-1 flex flex-col justify-center p-8 md:p-12 lg:p-20 xl:p-24 relative overflow-hidden bg-background">
+            <motion.div 
+              style={{ opacity, scale }}
+              className="max-w-4xl relative z-10"
+            >
+              <Quote size={48} className="text-primary/20 mb-8 lg:mb-12 md:w-16 md:h-16 lg:w-20 lg:h-20" />
+              <h2 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-serif italic font-medium leading-[1.1] tracking-tight text-foreground mb-12 lg:mb-16">
+                "From a broken TV in Chennai to the Nasdaq bell—conviction is the only currency that doesn't depreciate."
+              </h2>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12">
+                <div className="space-y-3 lg:space-y-4">
+                  <span className="text-[9px] lg:text-[10px] uppercase tracking-[0.2em] lg:tracking-[0.3em] text-primary font-bold">The Thesis</span>
+                  <p className="text-lg lg:text-xl font-bold leading-snug">Togetherness over Transaction.</p>
+                  <p className="text-xs lg:text-sm text-muted leading-relaxed">
+                    Investing isn't about capital; it's about being the first call when things go wrong and the first cheer when they go right.
+                  </p>
+                </div>
+                <div className="space-y-3 lg:space-y-4">
+                  <span className="text-[9px] lg:text-[10px] uppercase tracking-[0.2em] lg:tracking-[0.3em] text-primary font-bold">The Mission</span>
+                  <p className="text-lg lg:text-xl font-bold leading-snug">The Indian SaaS Mafia.</p>
+                  <p className="text-xs lg:text-sm text-muted leading-relaxed">
+                    Building a global ecosystem where Indian founders don't just participate—they lead the AI-native revolution.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
-              <div className="space-y-3 lg:space-y-4">
-                <span className="text-[9px] lg:text-[10px] uppercase tracking-[0.2em] lg:tracking-[0.3em] text-primary font-bold">The Thesis</span>
-                <p className="text-lg lg:text-xl font-bold leading-snug">Togetherness over Transaction.</p>
-                <p className="text-xs lg:text-sm text-muted leading-relaxed">
-                  Investing isn't about capital; it's about being the first call when things go wrong and the first cheer when they go right.
-                </p>
-              </div>
-              <div className="space-y-3 lg:space-y-4">
-                <span className="text-[9px] lg:text-[10px] uppercase tracking-[0.2em] lg:tracking-[0.3em] text-primary font-bold">The Mission</span>
-                <p className="text-lg lg:text-xl font-bold leading-snug">The Indian SaaS Mafia.</p>
-                <p className="text-xs lg:text-sm text-muted leading-relaxed">
-                  Building a global ecosystem where Indian founders don't just participate—they lead the AI-native revolution.
-                </p>
-              </div>
-              <div className="space-y-3 lg:space-y-4">
-                <span className="text-[9px] lg:text-[10px] uppercase tracking-[0.2em] lg:tracking-[0.3em] text-primary font-bold">The Edge</span>
-                <p className="text-lg lg:text-xl font-bold leading-snug">Operator Empathy.</p>
-                <p className="text-xs lg:text-sm text-muted leading-relaxed">
-                  I've sat in the founder's chair. I know the weight of the crown and the thrill of the scale.
-                </p>
-              </div>
+            {/* Background Decorative Text */}
+            <div className="absolute -bottom-10 -right-10 lg:-bottom-20 lg:-right-20 text-[20vw] lg:text-[25vw] font-black text-white/[0.02] pointer-events-none select-none leading-none">
+              FRSH
             </div>
-          </motion.div>
-          
-          {/* Background Decorative Text */}
-          <div className="absolute -bottom-10 -right-10 lg:-bottom-20 lg:-right-20 text-[20vw] lg:text-[25vw] font-black text-white/[0.02] pointer-events-none select-none leading-none">
-            FRSH
           </div>
         </section>
 
         {/* Narrative Section: The Odyssey */}
-        <section className="p-8 md:p-12 lg:p-20 xl:p-24 border-b border-border bg-secondary/30">
+        <section id="about" className="p-8 md:p-12 lg:p-20 xl:p-24 border-b border-border bg-secondary/30">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col lg:flex-row gap-12 md:gap-16 lg:gap-20 items-center">
               <div className="flex-1 space-y-8 lg:space-y-12">
@@ -242,7 +239,7 @@ export default function App() {
         </section>
 
         {/* Investment Philosophy: Together Fund */}
-        <section className="p-8 md:p-12 lg:p-20 xl:p-24 border-b border-border">
+        <section id="philosophy" className="p-8 md:p-12 lg:p-20 xl:p-24 border-b border-border">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 lg:mb-24 space-y-4 lg:space-y-6">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold tracking-tighter uppercase">Investment Philosophy</h2>
@@ -289,7 +286,7 @@ export default function App() {
         </section>
 
         {/* Portfolio Showcase */}
-        <section className="p-8 md:p-12 lg:p-20 xl:p-24 border-b border-border bg-secondary/10">
+        <section id="portfolio" className="p-8 md:p-12 lg:p-20 xl:p-24 border-b border-border bg-secondary/10">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 lg:mb-20 gap-8">
               <div className="space-y-3 lg:space-y-4">
@@ -353,7 +350,7 @@ export default function App() {
         </section>
 
         {/* Thought Leadership */}
-        <section className="p-8 md:p-12 lg:p-20 xl:p-24 border-b border-border">
+        <section id="insights" className="p-8 md:p-12 lg:p-20 xl:p-24 border-b border-border">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold tracking-tighter uppercase mb-12 lg:mb-16 text-center">Strategic Insights</h2>
             <Accordion type="single" collapsible className="w-full space-y-3 lg:space-y-4">
